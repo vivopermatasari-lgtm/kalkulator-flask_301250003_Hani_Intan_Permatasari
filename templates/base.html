@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{% block title %}Kalkulator Canggih{% endblock %}</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary":                "#00694c",
+                "on-primary":             "#ffffff",
+                "primary-container":      "#008560",
+                "on-primary-container":   "#f5fff7",
+                "secondary":              "#086b53",
+                "on-secondary":           "#ffffff",
+                "secondary-container":    "#a0f3d4",
+                "on-secondary-container": "#167159",
+                "primary-fixed":          "#86f8c9",
+                "primary-fixed-dim":      "#68dbae",
+                "secondary-fixed-dim":    "#84d6b9",
+                "on-primary-fixed":       "#002115",
+                "on-secondary-fixed":     "#002117",
+                "surface":                "#fcf9f8",
+                "surface-container-low":  "#f6f3f2",
+                "surface-container":      "#f0eded",
+                "surface-container-high": "#eae7e7",
+                "on-surface":             "#1c1b1b",
+                "on-surface-variant":     "#3d4943",
+                "outline":                "#6d7a73",
+                "outline-variant":        "#bccac1",
+                "background":             "#fcf9f8",
+                "on-background":          "#1c1b1b",
+                "error":                  "#ba1a1a",
+                "error-container":        "#ffdad6",
+            },
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            borderRadius: {
+                "sm":   "0.25rem",
+                "DEFAULT": "0.5rem",
+                "md":   "0.75rem",
+                "lg":   "1rem",
+                "xl":   "1.5rem",
+                "full": "9999px",
+            },
+            spacing: {
+                "base":   "8px",
+                "gutter": "12px",
+                "pad":    "24px",
+                "card":   "20px",
+            }
+        }
+    }
+}
+</script>
+<style>
+* { box-sizing: border-box; }
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+.lift-hover {
+    transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+}
+.lift-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0,105,76,0.12);
+}
+.flash-result {
+    animation: flashIn 0.4s ease;
+}
+@keyframes flashIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+/* Dark mode surfaces */
+.dark body { background: #0f1117; color: #f3f0ef; }
+.dark .card-surface { background: #1a1b23; border-color: #2a2b35; }
+.dark .input-surface {
+    background: #2a2b35;
+    border-color: #3a3b45;
+    color: #f3f0ef;
+}
+.dark .muted { color: #9ca3af; }
+</style>
+</head>
+<body class="bg-background text-on-background font-sans transition-colors duration-300 min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-primary shadow-md">
+    <div class="max-w-7xl mx-auto px-pad flex justify-between items-center py-4">
+        <a href="/" class="flex items-center gap-2 text-on-primary font-bold text-xl">
+            <span class="material-symbols-outlined text-2xl">calculate</span>
+            Kalkulator Canggih
+        </a>
+        <nav class="hidden md:flex items-center gap-2">
+            <a href="/" class="px-3 py-1.5 rounded text-sm font-semibold text-on-primary/80 hover:bg-white/20 transition-all
+                {% if request.path == '/' %}bg-white/20 text-on-primary{% endif %}">
+                Beranda
+            </a>
+            <a href="/aritmatika" class="px-3 py-1.5 rounded text-sm font-semibold text-on-primary/80 hover:bg-white/20 transition-all
+                {% if request.path == '/aritmatika' %}bg-white/20 border-b-2 border-white text-on-primary{% endif %}">
+                Aritmatika
+            </a>
+            <a href="/logika" class="px-3 py-1.5 rounded text-sm font-semibold text-on-primary/80 hover:bg-white/20 transition-all
+                {% if request.path == '/logika' %}bg-white/20 border-b-2 border-white text-on-primary{% endif %}">
+                Logika
+            </a>
+            <a href="/transformasi" class="px-3 py-1.5 rounded text-sm font-semibold text-on-primary/80 hover:bg-white/20 transition-all
+                {% if request.path == '/transformasi' %}bg-white/20 border-b-2 border-white text-on-primary{% endif %}">
+                Transformasi
+            </a>
+        </nav>
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-white/20 text-on-primary transition-all active:scale-95">
+            <span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
+        </button>
+    </div>
+</header>
+
+<!-- CONTENT -->
+<main class="pt-24 pb-12 flex-1">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-primary py-8 px-pad">
+    <div class="max-w-7xl mx-auto flex flex-col items-center gap-3">
+        <span class="text-on-primary font-bold text-lg">Kalkulator Canggih</span>
+        <div class="flex gap-6 text-sm">
+            <a href="/aritmatika" class="text-on-primary/80 hover:text-primary-fixed transition-colors">Aritmatika</a>
+            <a href="/logika"     class="text-on-primary/80 hover:text-primary-fixed transition-colors">Logika</a>
+            <a href="/transformasi" class="text-on-primary/80 hover:text-primary-fixed transition-colors">Transformasi</a>
+        </div>
+        <p class="text-on-primary/70 text-sm">Kalkulator Canggih © 2026 — Hani Intan Permatasari</p>
+    </div>
+</footer>
+
+<script>
+const toggle = document.getElementById('theme-toggle');
+const icon   = document.getElementById('theme-icon');
+const html   = document.documentElement;
+
+if (localStorage.getItem('theme') === 'dark') {
+    html.classList.add('dark');
+    icon.textContent = 'light_mode';
+}
+toggle.addEventListener('click', () => {
+    const dark = html.classList.toggle('dark');
+    icon.textContent = dark ? 'light_mode' : 'dark_mode';
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.remove('opacity-0','translate-y-6');
+            e.target.classList.add('opacity-100','translate-y-0');
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.lift-hover').forEach(el => {
+    el.classList.add('opacity-0','translate-y-6','transition-all','duration-500');
+    obs.observe(el);
+});
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

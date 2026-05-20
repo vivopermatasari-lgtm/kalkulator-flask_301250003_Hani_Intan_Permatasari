@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% block title %}Transformasi - Kalkulator Canggih{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-pad py-8">
+    <div class="mb-6">
+        <h2 class="text-3xl font-bold flex items-center gap-2" style="color:#00513a;">
+            <span class="material-symbols-outlined text-3xl">swap_horiz</span>
+            Transformasi Bilangan
+        </h2>
+        <p class="text-on-surface-variant text-sm mt-1">Konversi basis, suhu, mata uang, faktorial, dan fibonacci</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Form -->
+        <div class="bg-surface-container-low dark:card-surface border border-outline-variant/30 rounded-xl p-card">
+            <h5 class="font-semibold text-on-surface mb-4">Input Transformasi</h5>
+            <form method="POST">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-on-surface-variant mb-1">Pilih Kategori</label>
+                    <select name="kategori" id="selectKategori" onchange="tampilForm()"
+                        class="w-full px-3 py-2.5 rounded-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
+                        <option value="basis">🔢 Konversi Basis Bilangan</option>
+                        <option value="suhu">🌡️ Konversi Suhu</option>
+                        <option value="mata_uang">💰 Konversi Mata Uang</option>
+                        <option value="faktorial">❗ Faktorial</option>
+                        <option value="fibonacci">🌀 Deret Fibonacci</option>
+                    </select>
+                </div>
+
+                <!-- Basis -->
+                <div id="formBasis">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Basis Asal</label>
+                        <select name="dari" class="w-full px-3 py-2.5 rounded-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
+                            <option value="decimal">Decimal (10)</option>
+                            <option value="binary">Binary (2)</option>
+                            <option value="octal">Octal (8)</option>
+                            <option value="hex">Hexadecimal (16)</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Angka</label>
+                        <input type="text" name="angka" placeholder="Masukkan angka"
+                            class="w-full px-3 py-2.5 rounded-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+                    </div>
+                </div>
+
+                <!-- Suhu -->
+                <div id="formSuhu" style="display:none">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Satuan Asal</label>
+                        <select name="dari" class="w-full px-3 py-2.5 rounded-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
+                            <option value="celsius">Celsius (°C)</option>
+                            <option value="fahrenheit">Fahrenheit (°F)</option>
+                            <option value="kelvin">Kelvin (K)</option>
+                            <option value="reamur">Réamur (°Ré)</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Nilai Suhu</label>
+                        <input type="number" name="nilai" step="any" placeholder="Masukkan nilai suhu"
+                            class="w-full px-3 py-2.5 rounded-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+                    </div>
+                </div>
+
+                <!-- Mata Uang -->
+                <div id="formMataUang" style="display:none">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Jumlah IDR</label>
+                        <div class="flex">
+                            <span class="px-3 py-2.5 bg-surface-container border border-r-0 border-outline-variant rounded-l-lg text-sm font-semibold text-on-surface-variant">Rp</span>
+                            <input type="number" name="nilai" step="any" placeholder="Contoh: 1000000"
+                                class="flex-1 px-3 py-2.5 rounded-r-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+                        </div>
+                        <p class="text-xs text-on-surface-variant mt-1">Kurs statis per Mei 2025</p>
+                    </div>
+                </div>
+
+                <!-- Faktorial & Fibonacci -->
+                <div id="formAngka" style="display:none">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Nilai N</label>
+                        <input type="number" name="nilai" min="0" placeholder="Masukkan nilai N"
+                            class="w-full px-3 py-2.5 rounded-lg border border-outline-variant bg-white dark:input-surface text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full py-3 text-on-primary font-semibold rounded-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2"
+                    style="background:#00513a;">
+                    <span class="material-symbols-outlined text-base">swap_horiz</span>
+                    Konversi Sekarang
+                </button>
+            </form>
+        </div>
+
+        <!-- Hasil -->
+        <div>
+            {% if hasil %}
+                {% if hasil.error %}
+                <div class="bg-error-container text-error rounded-xl p-5 flex items-center gap-3">
+                    <span class="material-symbols-outlined">error</span>
+                    {{ hasil.error }}
+                </div>
+                {% else %}
+                <div class="flash-result bg-surface-container-low dark:card-surface border-l-4 border-outline-variant/30 rounded-xl p-card" style="border-left-color:#00513a;">
+                    <h5 class="font-semibold mb-3 flex items-center gap-2" style="color:#00513a;">
+                        <span class="material-symbols-outlined text-base">bar_chart</span>
+                        Hasil Konversi
+                    </h5>
+
+                    {% if hasil.kategori == 'basis' %}
+                    <table class="w-full text-sm mb-4">
+                        <tr class="border-b border-outline-variant/20"><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">Decimal</th><td class="py-2 font-mono font-bold text-primary">{{ hasil.decimal }}</td></tr>
+                        <tr class="border-b border-outline-variant/20"><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">Binary</th><td class="py-2 font-mono font-bold text-primary">{{ hasil.binary }}</td></tr>
+                        <tr class="border-b border-outline-variant/20"><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">Octal</th><td class="py-2 font-mono font-bold text-primary">{{ hasil.octal }}</td></tr>
+                        <tr><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">Hexadecimal</th><td class="py-2 font-mono font-bold text-primary">{{ hasil.hex }}</td></tr>
+                    </table>
+
+                    {% elif hasil.kategori == 'suhu' %}
+                    <table class="w-full text-sm mb-4">
+                        <tr class="border-b border-outline-variant/20"><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">🌡️ Celsius</th><td class="py-2 font-bold text-primary">{{ hasil.celsius }} °C</td></tr>
+                        <tr class="border-b border-outline-variant/20"><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">🌡️ Fahrenheit</th><td class="py-2 font-bold text-primary">{{ hasil.fahrenheit }} °F</td></tr>
+                        <tr class="border-b border-outline-variant/20"><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">🌡️ Kelvin</th><td class="py-2 font-bold text-primary">{{ hasil.kelvin }} K</td></tr>
+                        <tr><th class="text-left py-2 text-on-surface-variant font-semibold pr-4">🌡️ Réamur</th><td class="py-2 font-bold text-primary">{{ hasil.reamur }} °Ré</td></tr>
+                    </table>
+
+                    {% elif hasil.kategori == 'mata_uang' %}
+                    <div class="bg-secondary-container rounded-lg px-4 py-3 text-center mb-4">
+                        <span class="font-bold text-on-secondary-container text-lg">IDR {{ "{:,.0f}".format(hasil.idr) }}</span>
+                    </div>
+                    <table class="w-full text-sm mb-4">
+                        {% for k, v in hasil.konversi.items() %}
+                        <tr class="border-b border-outline-variant/20">
+                            <th class="text-left py-2 text-on-surface-variant font-semibold pr-4">💱 {{ k }}</th>
+                            <td class="py-2 font-bold text-primary">{{ v }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    {% elif hasil.kategori == 'faktorial' %}
+                    <div class="bg-secondary-container rounded-lg p-4 text-center mb-4">
+                        <span class="text-3xl font-bold text-on-secondary-container">{{ hasil.nilai }}</span>
+                    </div>
+                    <div class="bg-surface-container rounded-lg px-4 py-2 font-mono text-sm text-primary mb-4">{{ hasil.rumus }}</div>
+
+                    {% elif hasil.kategori == 'fibonacci' %}
+                    <div class="bg-secondary-container rounded-lg p-4 text-center mb-4">
+                        <span class="text-2xl font-bold text-on-secondary-container">Fibonacci ke-N = {{ hasil.nilai }}</span>
+                    </div>
+                    <p class="text-xs font-semibold text-on-surface-variant mb-2">Deret</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for angka in hasil.deret %}
+                        <span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-sm font-bold">{{ angka }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Langkah -->
+                    <p class="text-xs font-semibold text-on-surface-variant mb-2">Langkah Penyelesaian</p>
+                    <ol class="space-y-2">
+                        {% for langkah in hasil.langkah %}
+                        <li class="flex items-start gap-3 text-sm text-on-surface">
+                            <span class="min-w-6 h-6 rounded-full text-on-primary flex items-center justify-center text-xs font-bold" style="background:#00513a;">{{ loop.index }}</span>
+                            {{ langkah }}
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                {% endif %}
+            {% else %}
+            <div class="bg-surface-container-low dark:card-surface border border-outline-variant/30 rounded-xl p-card text-center text-on-surface-variant">
+                <span class="material-symbols-outlined text-5xl mb-3 block text-outline">swap_horiz</span>
+                <p class="text-sm">Hasil konversi akan muncul di sini</p>
+            </div>
+            {% endif %}
+
+            {% if history %}
+            <div class="mt-4 bg-surface-container-low dark:card-surface border border-outline-variant/30 rounded-xl p-card">
+                <div class="flex justify-between items-center mb-3">
+                    <h5 class="font-semibold text-on-surface flex items-center gap-2">
+                        <span class="material-symbols-outlined text-base" style="color:#00513a;">history</span>
+                        Riwayat
+                    </h5>
+                    <a href="/clear-history" class="text-xs text-error hover:underline flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">delete</span> Hapus
+                    </a>
+                </div>
+                <ul class="space-y-1">
+                    {% for item in history|reverse %}
+                    <li class="flex items-center gap-2 text-sm text-on-surface-variant py-1.5 border-b border-outline-variant/20">
+                        <span class="material-symbols-outlined text-sm text-outline">schedule</span>
+                        {{ item }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+function tampilForm() {
+    const k = document.getElementById('selectKategori').value;
+    ['formBasis','formSuhu','formMataUang','formAngka'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+    });
+    const map = { basis:'formBasis', suhu:'formSuhu', mata_uang:'formMataUang', faktorial:'formAngka', fibonacci:'formAngka' };
+    document.getElementById(map[k]).style.display = 'block';
+}
+</script>
+{% endblock %}
+{% endblock %}

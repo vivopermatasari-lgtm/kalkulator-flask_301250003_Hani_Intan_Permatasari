@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Beranda - Kalkulator Canggih{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="max-w-7xl mx-auto px-pad text-center py-16 md:py-24">
+    <h1 class="text-5xl md:text-6xl font-bold text-primary mb-4 tracking-tight">
+        Kalkulator Canggih
+    </h1>
+    <p class="text-lg text-on-surface-variant max-w-2xl mx-auto mb-10">
+        Alat hitung modern untuk berbagai kebutuhan. Dari operasi matematika harian hingga logika kompleks dan transformasi bilangan dalam satu antarmuka yang bersih.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+        <a href="/aritmatika" class="px-8 py-3 bg-primary text-on-primary font-semibold rounded-lg hover:opacity-90 active:scale-95 transition-all">
+            Mulai Sekarang
+        </a>
+        <a href="#fitur" class="px-8 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/5 transition-all">
+            Pelajari Fitur
+        </a>
+    </div>
+</section>
+
+<!-- Cards -->
+<section id="fitur" class="max-w-7xl mx-auto px-pad py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Aritmatika -->
+        <div class="lift-hover bg-surface-container-low dark:card-surface border border-outline-variant/30 rounded-xl p-card flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-4xl text-on-secondary-container">functions</span>
+            </div>
+            <h3 class="text-2xl font-bold text-primary mb-2">Aritmatika</h3>
+            <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">
+                Penjumlahan, pengurangan, perkalian, pembagian, pangkat, akar, modulus, dan floor division lengkap dengan langkah penyelesaian.
+            </p>
+            <ul class="text-left text-sm text-on-surface-variant mb-6 space-y-1 w-full">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary">check_circle</span> Tambah, Kurang, Kali, Bagi</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary">check_circle</span> Pangkat & Akar Kuadrat</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary">check_circle</span> Modulus & Floor Division</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary">check_circle</span> Langkah demi langkah</li>
+            </ul>
+            <a href="/aritmatika" class="mt-auto w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:opacity-90 active:scale-95 transition-all text-center">
+                Mulai Hitung
+            </a>
+        </div>
+
+        <!-- Logika -->
+        <div class="lift-hover bg-surface-container-low dark:card-surface border border-outline-variant/30 rounded-xl p-card flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-4xl text-on-primary-fixed">memory</span>
+            </div>
+            <h3 class="text-2xl font-bold text-secondary mb-2">Logika</h3>
+            <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">
+                Operasi gerbang logika boolean untuk kebutuhan pemrograman dan teknik digital.
+            </p>
+            <ul class="text-left text-sm text-on-surface-variant mb-6 space-y-1 w-full">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-secondary">check_circle</span> AND, OR, NOT</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-secondary">check_circle</span> XOR, NAND, NOR</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-secondary">check_circle</span> Tabel kebenaran lengkap</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-secondary">check_circle</span> Penjelasan tiap langkah</li>
+            </ul>
+            <a href="/logika" class="mt-auto w-full py-3 bg-secondary text-on-secondary rounded-lg font-semibold text-sm hover:opacity-90 active:scale-95 transition-all text-center">
+                Mulai Hitung
+            </a>
+        </div>
+
+        <!-- Transformasi -->
+        <div class="lift-hover bg-surface-container-low dark:card-surface border border-outline-variant/30 rounded-xl p-card flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-secondary-fixed-dim flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-4xl text-on-secondary-fixed">swap_horiz</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-2" style="color:#00513a;">Transformasi</h3>
+            <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">
+                Konversi basis bilangan, suhu, mata uang, faktorial, dan deret fibonacci.
+            </p>
+            <ul class="text-left text-sm text-on-surface-variant mb-6 space-y-1 w-full">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base" style="color:#00513a;">check_circle</span> Konversi Basis Bilangan</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base" style="color:#00513a;">check_circle</span> Konversi Suhu</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base" style="color:#00513a;">check_circle</span> Konversi Mata Uang (IDR)</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base" style="color:#00513a;">check_circle</span> Faktorial & Fibonacci ⭐</li>
+            </ul>
+            <a href="/transformasi" class="mt-auto w-full py-3 text-on-primary rounded-lg font-semibold text-sm hover:opacity-90 active:scale-95 transition-all text-center" style="background:#00513a;">
+                Mulai Hitung
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Info bar -->
+<section class="max-w-7xl mx-auto px-pad mt-8 mb-4">
+    <div class="bg-secondary-container text-on-secondary-container rounded-xl p-5 flex items-center gap-4">
+        <span class="material-symbols-outlined text-primary text-2xl">info</span>
+        <p class="text-sm font-medium">
+            Setiap hasil perhitungan dilengkapi <strong>rumus</strong>, <strong>langkah demi langkah</strong>, dan <strong>riwayat perhitungan</strong> otomatis.
+        </p>
+    </div>
+</section>
+{% endblock %}
